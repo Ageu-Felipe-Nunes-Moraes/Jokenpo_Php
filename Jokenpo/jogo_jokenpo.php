@@ -3,132 +3,132 @@
 
 class Jokenpo{
         // Propriedades relacionadas à escolha do jogador e da máquina
-        private $escolha_maquina; // Escolha aleatória da máquina
-        private $escolha_humano;  // Escolha do jogador humano
+        private $machineChoice; // Escolha aleatória da máquina
+        private $humanChoice;  // Escolha do jogador humano
         
         // Propriedades relacionadas às opções disponíveis e controle do jogo
-        private $lista_opcoes;        // Lista de opções disponíveis para o jogador
-        private $escolha_pessoa;      // Escolha do jogador humano
-        private $quantidade_escolhida; // Quantidade escolhida de pontos de tempo de espera
-        private $variavel_controle;    // Variável de controle para o jogo
+        private $optionsList;        // Lista de opções disponíveis para o jogador
+        private $personChoice;      // Escolha do jogador humano
+        private $quantityChosen; // Quantidade escolhida de pontos de tempo de espera
+        private $controlVariable;    // Variável de controle para o jogo
         
         // Propriedade relacionada ao segundo aleatório
-        private $indice_segundo_aleatorio; // Índice do segundo escolhido aleatoriamente
+        private $secondRandomIndex; // Índice do segundo escolhido aleatoriamente
 
     public function __construct(){
-        $this->cria_linha_dupla();
+        $this->creatsDoubleLine();
         echo "JOKENPÔ - CONTRA O COMPUTADOR\n";
-        $this->cria_linha_dupla();
-        $this->escolha_pessoa = 0;
-        $this->escolha_maquina = "";
-        $this->escolha_humano = 0;
-        $this->variavel_controle = true;
-        $this->lista_opcoes = array("PEDRA", "PAPEL", "TESOURA");
-        $this->escolha = "";
-        $this->indice_segundo_aleatorio = 0.0;
+        $this->creatsDoubleLine();
+        $this->personChoice = 0;
+        $this->machineChoice = "";
+        $this->humanChoice = 0;
+        $this->controlVariable = true;
+        $this->optionsList = array("PEDRA", "PAPEL", "TESOURA");
+        $this->choice = "";
+        $this->secondRandomIndex = 0.0;
     }
 
 
-    public function tempo_delay(){
+    public function delayTime(){
         echo "COMPUTADOR PENSANDO...\n";
-        $this->lista_quantidade_pontos = array(2, 3, 4, 5);
+        $this->PointsQuantityList = array(2, 3, 4, 5);
 
         // Escolha aleatória de um índice dentro do intervalo válido
-        $this->indice_aleatorio = array_rand($this->lista_quantidade_pontos);
+        $this->randomIndex = array_rand($this->PointsQuantityList);
 
         // Item escolhido aleatoriamente
-        $this->quantidade_escolhida = $this->lista_quantidade_pontos[$this->indice_aleatorio];
+        $this->quantityChosen = $this->PointsQuantityList[$this->randomIndex];
 
-        for ($i = 0; $i < $this->quantidade_escolhida; $i++){
-            $this->lista_segundos = array(1, 2);
-            $this->indice_segundo_aleatorio = array_rand($this->lista_segundos);
-            $this->segundo_escolhido = $this->lista_segundos[$this->indice_segundo_aleatorio];
-            sleep($this->segundo_escolhido);
+        for ($i = 0; $i < $this->quantityChosen; $i++){
+            $this->secondsList = array(1, 2);
+            $this->secondRandomIndex = array_rand($this->secondsList);
+            $this->secondChosen = $this->secondsList[$this->secondRandomIndex];
+            sleep($this->secondChosen);
             echo ".\n";
         }
-        $this->cria_linha_dupla();
+        $this->creatsDoubleLine();
     }
 
-    public function cria_linha_dupla(){
+    public function creatsDoubleLine(){
         echo "\n========================================\n";
     }
 
-    public function cria_linha_simples(){
+    public function creatsSimpleLine(){
         echo "\n----------------------------------------\n";
     }
 
-    public function introducao(){
+    public function introduction(){
         echo "INSTRUCÕES DE COMO JOGAR: \n";
-        $this->cria_linha_simples();
+        $this->creatsSimpleLine();
         echo "1--PEDRA\n";
         echo "2--PAPEL\n";
         echo "3--TESOURA\n";
         echo "0--SAIR\n";
-        $this->cria_linha_simples();
+        $this->creatsSimpleLine();
     }
 
-    public function valor_escolha_computador(){
+    public function computerChoiceValue(){
         // Escolha aleatória de um índice dentro do intervalo válido
-        $this->indice_aleatorio = array_rand($this->lista_opcoes);
+        $this->randomIndex = array_rand($this->optionsList);
 
         // Item escolhido aleatoriamente
-        $this->escolha = $this->lista_opcoes[$this->indice_aleatorio];
+        $this->choice = $this->optionsList[$this->randomIndex];
 
-        return $this->escolha;
+        return $this->choice;
     }
 
-    public function valor_escolha_pessoa(){
+    public function personChoiceValue(){
         echo "DIGITE O NÚMERO DA SUA ESCOLHA: ";
-        $this->escolha_pessoa = readline();
-        $this->cria_linha_simples();
-        return $this->escolha_pessoa;
+        $this->personChoice = readline();
+        $this->creatsSimpleLine();
+        return $this->personChoice;
     }
 
-    public function mostra_escolhas(){
+    public function showChoices(){
    
-        while ($this->variavel_controle){
-            $this->escolha_pessoa = $this->valor_escolha_pessoa();
+        while ($this->controlVariable){
+            $this->personChoice = $this->personChoiceValue();
             
-            if ($this->escolha_pessoa == 0){
+            if ($this->personChoice == 0){
                 echo "FIM DE JOGO!!!\n";
-                $this->variavel_controle = false;
+                $this->controlVariable = false;
             }
 
-            elseif ($this->escolha_pessoa > 0 && $this->escolha_pessoa < 4){
-                $this->tempo_delay();
-                $this->escolha_maquina = $this->valor_escolha_computador();
-                $this->escolha_humano = $this->lista_opcoes[$this->escolha_pessoa - 1];
-                echo "HUMANO(VOCÊ): $this->escolha_humano\n";
-                echo "COMPUTADOR: $this->escolha_maquina\n";
-                $this->cria_linha_simples();
-                $this->verifica_vencedor();
-                $this->variavel_controle = false;
+            elseif ($this->personChoice > 0 && $this->personChoice < 4){
+                $this->delayTime();
+                $this->machineChoice = $this->computerChoiceValue();
+                $this->humanChoice = $this->optionsList[$this->personChoice - 1];
+                echo "HUMANO(VOCÊ): $this->humanChoice\n";
+                echo "COMPUTADOR: $this->machineChoice\n";
+                $this->creatsSimpleLine();
+                $this->checksWinner();
+                $this->controlVariable = false;
             }
 
             else{
                 echo "VALOR INVÁLIDO!!! TENTE NOVAMENTE!!\n";
-                $this->cria_linha_dupla();
+                $this->creatsDoubleLine();
             }
         }
     }
 
-    public function verifica_vencedor(){
-        if ($this->lista_opcoes[$this->escolha_pessoa - 1] == $this->escolha_maquina){
+    public function checksWinner(){
+        if ($this->optionsList[$this->personChoice - 1] == $this->machineChoice){
             echo "EMPATE!!!\n";
         }
 
         else{
                 
             if (
-                ($this->lista_opcoes[$this->escolha_pessoa - 1] == "PEDRA" && $this->escolha_maquina == "TESOURA") ||
-                ($this->lista_opcoes[$this->escolha_pessoa - 1] == "PAPEL" && $this->escolha_maquina == "PEDRA") ||
-                ($this->lista_opcoes[$this->escolha_pessoa - 1] == "TESOURA" && $this->escolha_maquina == "PAPEL")
+                ($this->optionsList[$this->personChoice - 1] == "PEDRA" && $this->machineChoice == "TESOURA") ||
+                ($this->optionsList[$this->personChoice - 1] == "PAPEL" && $this->machineChoice == "PEDRA") ||
+                ($this->optionsList[$this->personChoice - 1] == "TESOURA" && $this->machineChoice == "PAPEL")
             ){
 
                 echo "VOCÊ VENCEU!!!\n";
             }
 
-            elseif ($this->escolha_pessoa == 0){
+            elseif ($this->personChoice == 0){
                 echo "\n";
             }
                 
@@ -136,16 +136,15 @@ class Jokenpo{
                 echo "VOCÊ PERDEU\n";
             }
         }
-        if ($this->escolha_pessoa != 0){
-            $this->cria_linha_dupla();
-            $this->mostra_escolhas();
+        if ($this->personChoice != 0){
+            $this->creatsDoubleLine();
+            $this->showChoices();
         }
     }
-};
+}
 
-
-$iniciar_jogo = new Jokenpo;
-$iniciar_jogo->introducao();
-$iniciar_jogo->mostra_escolhas();
+$startGame = new Jokenpo;
+$startGame->introduction();
+$startGame->showChoices();
 
 ?>
