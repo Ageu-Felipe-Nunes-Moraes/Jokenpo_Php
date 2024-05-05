@@ -2,19 +2,20 @@
 <?php
 
 class Jokenpo{
-        // Propriedades relacionadas à escolha do jogador e da máquina
-        private $machineChoice; // Escolha aleatória da máquina
-        private $humanChoice;  // Escolha do jogador humano
+        // Properties related to player choice and machine
+        private $machineChoice; // Random machine choice
+        private $humanChoice;  // Player choice
         
-        // Propriedades relacionadas às opções disponíveis e controle do jogo
-        private $optionsList;        // Lista de opções disponíveis para o jogador
-        private $personChoice;      // Escolha do jogador humano
-        private $quantityChosen; // Quantidade escolhida de pontos de tempo de espera
-        private $controlVariable;    // Variável de controle para o jogo
+        // Properties related to available options and game control
+        private $optionsList;        // List of options available to the player
+        private $personChoice;      // Human player choice
+        private $quantityChosen; // Number of time points chosen to wait
+        private $controlVariable;    // Control variable for the game
         
-        // Propriedade relacionada ao segundo aleatório
-        private $secondRandomIndex; // Índice do segundo escolhido aleatoriamente
+        // Properties related to the random second
+        private $secondRandomIndex; // Randomly chosen index second
 
+    // Constructor Method
     public function __construct(){
         $this->creatsDoubleLine();
         echo "JOKENPÔ - CONTRA O COMPUTADOR\n";
@@ -28,17 +29,18 @@ class Jokenpo{
         $this->secondRandomIndex = 0.0;
     }
 
-
+    // Method to delay time
     public function delayTime(){
         echo "COMPUTADOR PENSANDO...\n";
         $this->PointsQuantityList = array(2, 3, 4, 5);
 
-        // Escolha aleatória de um índice dentro do intervalo válido
+        // Randomly choosing an index from a valid range
         $this->randomIndex = array_rand($this->PointsQuantityList);
 
-        // Item escolhido aleatoriamente
+        // Randomly chosen item
         $this->quantityChosen = $this->PointsQuantityList[$this->randomIndex];
 
+        // Choice of a random time for the computer to respond
         for ($i = 0; $i < $this->quantityChosen; $i++){
             $this->secondsList = array(1, 2);
             $this->secondRandomIndex = array_rand($this->secondsList);
@@ -48,15 +50,15 @@ class Jokenpo{
         }
         $this->creatsDoubleLine();
     }
-
+    // Creates double line on screen
     public function creatsDoubleLine(){
         echo "\n========================================\n";
     }
-
+    // Creates simple line on screen
     public function creatsSimpleLine(){
         echo "\n----------------------------------------\n";
     }
-
+    // Shows initial information
     public function introduction(){
         echo "INSTRUCÕES DE COMO JOGAR: \n";
         $this->creatsSimpleLine();
@@ -66,34 +68,34 @@ class Jokenpo{
         echo "0--SAIR\n";
         $this->creatsSimpleLine();
     }
-
+    // Function to computer choice
     public function computerChoiceValue(){
-        // Escolha aleatória de um índice dentro do intervalo válido
+        // Randomly choosing an index from a valid range
         $this->randomIndex = array_rand($this->optionsList);
 
-        // Item escolhido aleatoriamente
+        // Randomly chosen item
         $this->choice = $this->optionsList[$this->randomIndex];
 
         return $this->choice;
     }
-
+    // Function to person choice
     public function personChoiceValue(){
         echo "DIGITE O NÚMERO DA SUA ESCOLHA: ";
         $this->personChoice = readline();
         $this->creatsSimpleLine();
         return $this->personChoice;
     }
-
+    // Show both choices
     public function showChoices(){
-   
+        // Will happen as long as the variable is True
         while ($this->controlVariable){
             $this->personChoice = $this->personChoiceValue();
-            
+            // If the choice is equal to zero, the game is over
             if ($this->personChoice == 0){
                 echo "FIM DE JOGO!!!\n";
                 $this->controlVariable = false;
             }
-
+            // Shows picks, call delay, simple line and winner
             elseif ($this->personChoice > 0 && $this->personChoice < 4){
                 $this->delayTime();
                 $this->machineChoice = $this->computerChoiceValue();
@@ -104,14 +106,14 @@ class Jokenpo{
                 $this->checksWinner();
                 $this->controlVariable = false;
             }
-
+            // Error treatment
             else{
                 echo "VALOR INVÁLIDO!!! TENTE NOVAMENTE!!\n";
                 $this->creatsDoubleLine();
             }
         }
     }
-
+    // Checks winner
     public function checksWinner(){
         if ($this->optionsList[$this->personChoice - 1] == $this->machineChoice){
             echo "EMPATE!!!\n";
@@ -143,6 +145,7 @@ class Jokenpo{
     }
 }
 
+// Instance with functions calls
 $startGame = new Jokenpo;
 $startGame->introduction();
 $startGame->showChoices();
